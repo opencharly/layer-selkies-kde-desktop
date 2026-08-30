@@ -1,7 +1,7 @@
-version: 2026.232.0520
+version: 2026.240.1943
 selkies-kde-desktop:
     candy:
-        version: 2026.152.2006
+        version: 2026.242.1350
         description: |
             The KDE Plasma flavor of the selkies streaming desktop — composes selkies-core with the kde-selkies nested-compositor primitive into a headless, WebRTC-streamed Plasma pod.
             Full KDE Plasma edition of the selkies streaming desktop, ALWAYS run as a
@@ -24,8 +24,8 @@ selkies-kde-desktop:
             streaming spine (Chrome + pipewire), proven live by the streamed Plasma
             desktop answering on the selkies HTTPS port.
         candy:
-            - '@github.com/opencharly/pod-selkies-core:v2026.237.808'
-            - '@github.com/opencharly/pod-kde-selkies:v2026.237.0807'
+            - '@github.com/opencharly/pod-selkies-core:v2026.242.1242'
+            - '@github.com/opencharly/pod-kde-selkies:v2026.242.1334'
         plan:
             - check: the kde-selkies flavor primitive's nested-session launcher is installed and executable in the deploy user's PATH
               file:
