@@ -1,7 +1,7 @@
 version: 2026.240.1943
 selkies-kde-desktop:
     candy:
-        version: 2026.243.0851
+        version: 2026.243.1646
         description: |
             The KDE Plasma flavor of the selkies streaming desktop — composes selkies-core with the kde-selkies nested-compositor primitive into a headless, WebRTC-streamed Plasma pod.
             Full KDE Plasma edition of the selkies streaming desktop, ALWAYS run as a
@@ -54,13 +54,30 @@ selkies-kde-desktop:
                 file: /usr/bin/pipewire
                 exists: true
             - check: the composed nested KDE Plasma session reaches RUNNING under supervisord without crash-looping
+              # context: [runtime] is what every sibling check here declares, and what the
+              # identical check in pod-kde-selkies declares. This copy had lost it, so it ran in
+              # BOX mode -- where supervisord is not running at all -- and `supervisorctl status`
+              # exited 4 before the bed ever reached its live leg. A duplicated check that drifted
+              # from its original: the assertion was fine, the context was not.
+              context:
+                - runtime
+              #
+              # The `sleep 20` this replaces was an R4 delay-as-assertion: it waited a fixed 20s
+              # and then looked ONCE, so it both cost 20s on a healthy stack and proved nothing
+              # about a session that crash-loops on a 25s cycle. supervisord already reports the
+              # uptime, so the stability claim can be READ instead of waited for -- the same form
+              # pod-labwc's labwc-stable uses. charly's own eventually/retry_interval does the
+              # waiting, stops the moment uptime passes 20s, and fails if it never does.
               stdout:
                 - matches: "RUNNING"
               command:
                 command: |
-                    sleep 20
-                    supervisorctl status kde-selkies-session
+                    out=$(supervisorctl status kde-selkies-session)
+                    echo "$out"
+                    echo "$out" | awk '/RUNNING/{n=split($NF,a,":"); s=a[n]+a[n-1]*60+a[n-2]*3600; if(s>=20){f=1}} END{exit !f}'
                 in_container: true
+              eventually: 90s
+              retry_interval: 5s
             - check: the selkies web UI streams the live KDE Plasma desktop over HTTPS on port 3000
               timeout: 10s
               context:
