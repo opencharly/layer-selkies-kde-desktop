@@ -1,7 +1,7 @@
 version: 2026.240.1943
 selkies-kde-desktop:
     candy:
-        version: 2026.243.0851
+        version: 2026.243.1609
         description: |
             The KDE Plasma flavor of the selkies streaming desktop — composes selkies-core with the kde-selkies nested-compositor primitive into a headless, WebRTC-streamed Plasma pod.
             Full KDE Plasma edition of the selkies streaming desktop, ALWAYS run as a
@@ -54,6 +54,13 @@ selkies-kde-desktop:
                 file: /usr/bin/pipewire
                 exists: true
             - check: the composed nested KDE Plasma session reaches RUNNING under supervisord without crash-looping
+              # context: [runtime] is what every sibling check here declares, and what the
+              # identical check in pod-kde-selkies declares. This copy had lost it, so it ran in
+              # BOX mode -- where supervisord is not running at all -- and `supervisorctl status`
+              # exited 4 before the bed ever reached its live leg. A duplicated check that drifted
+              # from its original: the assertion was fine, the context was not.
+              context:
+                - runtime
               stdout:
                 - matches: "RUNNING"
               command:
