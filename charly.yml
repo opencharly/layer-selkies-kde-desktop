@@ -25,7 +25,7 @@ selkies-kde-desktop:
             desktop answering on the selkies HTTPS port.
         candy:
             - '@github.com/opencharly/pod-selkies-core:v2026.247.1638'
-            - '@github.com/opencharly/pod-kde-selkies:v2026.243.1836'
+            - '@github.com/opencharly/pod-kde-selkies:v2026.247.1546'
         plan:
             - check: the kde-selkies flavor primitive's nested-session launcher is installed and executable in the deploy user's PATH
               file:
