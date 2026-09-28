@@ -1,7 +1,5 @@
-version: 2026.240.1943
 selkies-kde-desktop:
     candy:
-        version: 2026.243.1646
         description: |
             The KDE Plasma flavor of the selkies streaming desktop — composes selkies-core with the kde-selkies nested-compositor primitive into a headless, WebRTC-streamed Plasma pod.
             Full KDE Plasma edition of the selkies streaming desktop, ALWAYS run as a
