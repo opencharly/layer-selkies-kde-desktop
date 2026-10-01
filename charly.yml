@@ -22,8 +22,8 @@ selkies-kde-desktop:
             streaming spine (Chrome + pipewire), proven live by the streamed Plasma
             desktop answering on the selkies HTTPS port.
         candy:
-            - '@github.com/opencharly/pod-selkies-core:v2026.274.0910'
-            - '@github.com/opencharly/pod-kde-selkies:v2026.274.0757'
+            - '@github.com/opencharly/pod-selkies-core:v2026.274.1034'
+            - '@github.com/opencharly/pod-kde-selkies:v2026.274.1033'
         plan:
             - check: the kde-selkies flavor primitive's nested-session launcher is installed and executable in the deploy user's PATH
               file:
